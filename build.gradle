@@ -1,0 +1,78 @@
+plugins {
+    id 'java'
+    id 'application'
+    id 'com.github.johnrengelman.shadow' version '5.2.0'
+
+}
+
+group 'org.example'
+version '1.0-SNAPSHOT'
+
+repositories {
+    mavenCentral()
+}
+
+compileJava {
+    options.encoding = 'UTF-8'
+}
+
+tasks.withType(JavaCompile){
+    options.encoding = 'UTF-8'
+}
+
+mainClassName = 'Main'
+
+dependencies {
+    implementation group: 'org.apache.poi', name: 'poi', version: '5.0.0'
+
+    implementation 'com.github.albfernandez:javadbf:1.13.1'
+    implementation 'org.jetbrains:annotations:19.0.0'
+    testCompile group: 'junit', name: 'junit', version: '4.12'
+    compile group: 'org.jasypt', name: 'jasypt', version: '1.9.3'
+
+
+
+    //correo
+    compile group: 'javax.mail', name: 'javax.mail-api', version: '1.6.2'
+    compile group: 'com.sun.mail', name: 'javax.mail', version: '1.6.2'
+
+
+    //Agregando el OpenApi3
+    compile "io.javalin:javalin-openapi:3.13.6"
+    //manejo de log.
+    compile "org.slf4j:slf4j-simple:1.7.28"
+    //libreria jsoup.
+    compile group: 'org.jsoup', name: 'jsoup', version: '1.11.3'
+    //Procesamiento JSON.
+    compile "com.fasterxml.jackson.core:jackson-databind:2.10.1"
+
+
+    compile 'org.hibernate:hibernate-core:5.4.18.Final'
+    compile 'org.hibernate:hibernate-entitymanager:5.4.18.Final'
+    //compile group: 'org.hibernate.orm', name: 'hibernate-entitymanager', version: '5.4.18.Final'
+    compile 'com.h2database:h2:1.4.200'
+    compile 'org.postgresql:postgresql:42.2.1'
+
+    compile "io.jsonwebtoken:jjwt:0.9.1"
+    compile group: 'org.eclipse.jetty', name: 'jetty-http-spi', version: '9.4.30.v20200611'
+    compile "org.glassfish.jaxb:jaxb-runtime:2.4.0-b180830.0438"
+    compile "com.sun.xml.ws:jaxws-rt:2.3.1"
+    compile "com.sun.xml.ws:rt:2.3.1"
+
+    // https://mvnrepository.com/artifact/net.lingala.zip4j/zip4j
+    implementation group: 'net.lingala.zip4j', name: 'zip4j', version: '2.6.0'
+
+}
+
+shadowJar{
+    baseName = 'app'
+    classifier = ''
+    archiveVersion = ''
+}
+task stage {
+    dependsOn shadowJar
+}
+
+test {
+    useJUnitPlatform()
+}
